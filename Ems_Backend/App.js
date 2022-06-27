@@ -2,9 +2,10 @@ const bodyParser = require('body-parser');
 const express = require('express');
 const mongoose = require('mongoose');
 const app = express();
-require("./Empolyee");
+require("./Model/Empolyee");
 const Empolyee = mongoose.model("employee");
 const con = "mongodb+srv://bajwa:lRzDVZ5VtJODaAXi@cluster0.958ffxu.mongodb.net/?retryWrites=true&w=majority"
+
 
 
 app.use(bodyParser.json());
@@ -57,29 +58,69 @@ app.post('/send-data',(req,res)=>{
       });
  
 
+})
 
+app.post('/delete',(req,res)=>{
+
+        Empolyee.findByIdAndDelete({_id: req.body.id})
+        .then(
+            (data)=>{
+                    console.log(data)
+                    res.send(data);
+            }
+            )
+        res.send("Data Deleted")
     
-
+        .catch((err) => {
+            console.log(err);
+          });
 })
 
 
+app.post('/update',(req,res)=>{
+
+        Empolyee.findByIdAndUpdate({_id: req.body.id},{
+
+            name: req.body.name,
+            email: req.body.email,
+            phone: req.body.phone,
+            picture: req.body.picture,
+            salary: req.body.salary,
+            position: req.body.position,
+    
+        })
+        .then(
+            (data)=>{
+                    console.log(data)
+                    res.send(data);
+            }
+            )
+        res.send("Data Updated")
+    
+        .catch((err) => {
+            console.log(err);
+          });
+})
 
 
 
 app.get('/',(req,res)=>{
 
-    res.send("This is Home Page");
+ Empolyee.find({})
+
+    .then((data)=>{
+        
+        res.send(data)
+    })
+    
 
 })
+
 app.get('/Profile',(req,res)=>{
 
     res.send("This is Profile Page");
 
 })
-
-
-
-
 
 app.listen('3000',(req,res)=>{
 

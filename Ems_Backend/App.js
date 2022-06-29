@@ -116,11 +116,11 @@ app.get('/',(req,res)=>{
 
 })
 
-app.get('/Profile',(req,res)=>{
+// app.get('/Profile',(req,res)=>{
 
-    res.send("This is Profile Page");
+//     res.send("This is Profile Page");
 
-})
+// })
 
 app.listen('3000',(req,res)=>{
 
